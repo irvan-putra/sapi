@@ -18,6 +18,8 @@ adb reverse tcp:8787 tcp:8787
 
 Build the Android APK as below. Paste only TESTER_TOKEN into the app. BCA success requires responseCode 2001100. The backend is sandbox-only, loopback-only, redacts identity fields, and exposes no transfer endpoint.
 
+For a walkthrough of what the code does and what is untested, see [docs/HOW-IT-WORKS.md](docs/HOW-IT-WORKS.md).
+
 ## Requirements
 
 - JDK 17
