@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>sapi: BCA sandbox balance tester</title>
+<meta name="description" content="An Android screen and a local Node backend for trying BCA's sandbox balance inquiry. Sandbox only, untested against BCA.">
+<style>
+:root{--ink:#17202a;--mute:#566573;--line:#d5dbe1;--bg:#f7f9fb;--accent:#0b5cad;--warn:#fff4d6;--warnline:#e0b84a}
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg)}
+main{max-width:760px;margin:0 auto;padding:32px 20px 64px}
+h1{font-size:2rem;line-height:1.2;margin:0 0 8px}
+h2{font-size:1.25rem;margin:40px 0 8px}
+p,li{overflow-wrap:anywhere}
+a{color:var(--accent)}
+.lead{color:var(--mute);font-size:1.1rem;margin:0 0 20px}
+.note{background:var(--warn);border:1px solid var(--warnline);border-radius:8px;padding:12px 16px;margin:20px 0}
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:16px 0}
+.box{background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-weight:600}
+.arrow{color:var(--mute);font-size:.9rem}
+code,pre{font:.9rem ui-monospace,Consolas,monospace;background:#eef2f6;border-radius:4px}
+code{padding:1px 5px}
+pre{padding:12px;overflow-x:auto}
+table{border-collapse:collapse;width:100%;background:#fff}
+td,th{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+.links a{display:inline-block;margin:4px 12px 4px 0}
+footer{margin-top:48px;color:var(--mute);font-size:.9rem}
+</style>
+</head>
+<body>
+<main>
+<h1>sapi</h1>
+<p class="lead">An Android screen plus a small backend on your computer, for trying BCA's sandbox balance inquiry.</p>
+
+<div class="note"><strong>Sandbox only. Not a banking app.</strong> This page has no sign-in and takes no credentials. The bank integration has not been tested against BCA, and it is not a security audit. Do not use real banking credentials.</div>
+
+<h2>How it fits together</h2>
+<div class="flow">
+<span class="box">Phone app</span><span class="arrow">USB + adb reverse, 127.0.0.1:8787</span>
+<span class="box">Node backend on your computer</span><span class="arrow">HTTPS</span>
+<span class="box">sandbox.bca.co.id</span>
+</div>
+<ul>
+<li>The app has a token field and two buttons: check the backend, and test the BCA balance. It shows the JSON it gets back and stores nothing.</li>
+<li>The backend listens on 127.0.0.1 only, needs your tester token, and allows only <code>GET /health</code> and <code>GET /balance</code>. There is no transfer or payment route.</li>
+<li>BCA credentials and the private key stay in files on your computer, never in the app or the repository.</li>
+</ul>
+
+<h2>Status</h2>
+<table>
+<tr><th>Part</th><th>State</th></tr>
+<tr><td>Android app</td><td>Compiles. Debug APK builds in GitHub Actions.</td></tr>
+<tr><td>Backend</td><td>Syntax check only. No unit tests.</td></tr>
+<tr><td>BCA calls</td><td>Never run. Two known mismatches with BCA's documentation (missing <code>X-EXTERNAL-ID</code> header, timestamp format), listed in the README.</td></tr>
+</table>
+
+<h2>Get started</h2>
+<p>The README has the step-by-step guide for sandbox credentials, including which steps are unverified.</p>
+<pre>cd backend
+cp env-template.txt .env
+openssl rand -hex 32   # TESTER_TOKEN
+npm run check
+npm start
+adb reverse tcp:8787 tcp:8787</pre>
+
+<h2>Links</h2>
+<p class="links">
+<a href="https://github.com/irvan-putra/sapi">Source repository</a>
+<a href="https://github.com/irvan-putra/sapi#getting-bca-sandbox-credentials-step-by-step">Credentials guide (README)</a>
+<a href="https://github.com/irvan-putra/sapi/blob/main/docs/HOW-IT-WORKS.md">How it works</a>
+<a href="https://developer.bca.co.id/en/Dokumentasi">BCA API documentation</a>
+</p>
+
+<footer>Developed with help from Rapi (biks.ai).</footer>
+</main>
+</body>
+</html>
