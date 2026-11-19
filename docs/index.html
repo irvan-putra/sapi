@@ -51,8 +51,8 @@ footer{margin-top:48px;color:var(--mute);font-size:.9rem}
 <table>
 <tr><th>Part</th><th>State</th></tr>
 <tr><td>Android app</td><td>Compiles. Debug APK builds in GitHub Actions.</td></tr>
-<tr><td>Backend</td><td>Syntax check only. No unit tests.</td></tr>
-<tr><td>BCA calls</td><td>Never run. Two likely mismatches with BCA's documentation (missing <code>X-EXTERNAL-ID</code> header, timestamp format), listed in the README.</td></tr>
+<tr><td>Backend</td><td>Syntax check and 3 tests with fake keys and a fake HTTP function.</td></tr>
+<tr><td>BCA calls</td><td>Never run. Two mismatches with BCA's documentation (missing <code>X-EXTERNAL-ID</code> header, timestamp format) were fixed in code and covered by tests with fake data. Still untried against BCA.</td></tr>
 </table>
 
 <h2>Get started</h2>

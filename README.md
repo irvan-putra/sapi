@@ -45,13 +45,15 @@ Source pages: [How to Use](https://developer.bca.co.id/en/Cara-Penggunaan), [San
    - `TESTER_TOKEN`: `openssl rand -hex 32`. Paste the same value into the app.
 6. Run the backend and the app as described in "BCA sandbox test" above.
 
-### Likely mismatches with BCA's current documentation
+### Mismatches with BCA's documentation (fixed locally, not verified against BCA)
 
-Found by comparing `backend/server.js` with BCA's SNAP documentation. Not fixed and not confirmed by a real call. They may or may not make a balance call fail:
+Found by comparing `backend/server.js` with BCA's SNAP documentation, and changed to match it:
 
-- `X-EXTERNAL-ID` is listed as a required header (numeric string, max 36 characters, unique within a day). The backend does not send it.
-- `X-TIMESTAMP` is documented as ISO 8601 with a timezone offset, 25 characters (for example `2022-04-21T17:34:52+07:00`). The backend sends UTC with `Z`.
+- `X-EXTERNAL-ID` is listed as a required header (numeric string, max 36 characters, unique within a day). The balance request now sends one.
+- `X-TIMESTAMP` is documented as ISO 8601 with a timezone offset, 25 characters (for example `2022-04-21T17:34:52+07:00`). The backend now sends local time with its offset instead of UTC with `Z`.
 - The docs also contain a different, older sandbox flow with other headers. This project follows the SNAP flow only.
+
+These fixes are covered by tests with fake keys and a fake HTTP function (`cd backend && npm test`). They have not been tried against BCA, so a real balance call may still fail for other reasons.
 
 ## Requirements
 

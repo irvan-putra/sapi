@@ -49,12 +49,13 @@ The startup check ties the backend to the sandbox address. It does not stop you 
 
 - Real code: the app screen, the token check, the two BCA request flows and the redaction.
 - Placeholders: every value in `backend/env-template.txt` (empty on purpose) and the sandbox account.
+- Request headers: the balance call sends `X-EXTERNAL-ID`, and `X-TIMESTAMP` is local time with offset, as BCA's documentation describes. Fixed after reading the docs, tested with fake data only.
 - Not verified: the signature format, headers and response codes against BCA's current specification, and any actual call to BCA. A successful result would need `responseCode` `2001100`.
 
 ## Test status
 
 - The Android app compiles and the debug APK build passes in GitHub Actions.
-- The backend has had a syntax check (`npm run check`) only. No unit tests exist and no BCA calls have been made.
+- The backend has a syntax check (`npm run check`) and 3 tests (`npm test`) that use fake keys and a fake HTTP function. No BCA calls have been made.
 
 ## Setup
 
