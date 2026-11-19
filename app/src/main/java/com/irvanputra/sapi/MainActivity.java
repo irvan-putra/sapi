@@ -1,21 +1,3 @@
 package com.irvanputra.sapi;
-
-import android.app.Activity;
-import android.os.Bundle;
-import android.view.Gravity;
-import android.widget.TextView;
-
-public final class MainActivity extends Activity {
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        TextView message = new TextView(this);
-        message.setText("Hello World");
-        message.setTextSize(32);
-        message.setGravity(Gravity.CENTER);
-        message.setContentDescription("Hello World");
-
-        setContentView(message);
-    }
-}
+import android.app.Activity;import android.graphics.Typeface;import android.os.Bundle;import android.text.InputType;import android.widget.*;import java.io.*;import java.net.*;import java.nio.charset.StandardCharsets;import java.util.concurrent.*;import java.util.stream.Collectors;
+public class MainActivity extends Activity{static final String BASE="http://127.0.0.1:8787";final ExecutorService pool=Executors.newSingleThreadExecutor();EditText token;TextView out;public void onCreate(Bundle b){super.onCreate(b);int p=(int)(20*getResources().getDisplayMetrics().density);LinearLayout box=new LinearLayout(this);box.setOrientation(LinearLayout.VERTICAL);box.setPadding(p,p,p,p);TextView title=new TextView(this);title.setText("BCA Sandbox Balance Tester");title.setTextSize(22);title.setTypeface(Typeface.DEFAULT,Typeface.BOLD);box.addView(title);token=new EditText(this);token.setHint("64-character local tester token");token.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);box.addView(token);Button health=new Button(this);health.setText("Check backend");health.setOnClickListener(v->call("/health"));box.addView(health);Button balance=new Button(this);balance.setText("Test BCA balance");balance.setOnClickListener(v->call("/balance"));box.addView(balance);out=new TextView(this);out.setText("USB + adb reverse required. BCA credentials stay on the computer.");out.setTextIsSelectable(true);out.setTypeface(Typeface.MONOSPACE);box.addView(out);ScrollView scroll=new ScrollView(this);scroll.addView(box);setContentView(scroll)}void call(String path){String t=token.getText().toString().trim();if(!t.matches("[a-fA-F0-9]{64}")){out.setText("Enter the local tester token.");return;}out.setText("Requesting…");pool.execute(()->{HttpURLConnection c=null;try{c=(HttpURLConnection)new URL(BASE+path).openConnection();c.setConnectTimeout(5000);c.setReadTimeout(15000);c.setRequestProperty("Authorization","Bearer "+t);int s=c.getResponseCode();InputStream in=s>=400?c.getErrorStream():c.getInputStream();String body;try(BufferedReader r=new BufferedReader(new InputStreamReader(in,StandardCharsets.UTF_8))){body=r.lines().collect(Collectors.joining("\n"));}String result="HTTP "+s+"\n"+body;runOnUiThread(()->out.setText(result));}catch(Exception e){runOnUiThread(()->out.setText("Request failed: "+e.getClass().getSimpleName()));}finally{if(c!=null)c.disconnect();}})}protected void onDestroy(){pool.shutdownNow();super.onDestroy();}}
