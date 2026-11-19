@@ -29,13 +29,13 @@ Source pages: [How to Use](https://developer.bca.co.id/en/Cara-Penggunaan), [San
 1. Register or log in on the BCA Developer API website (https://developer.bca.co.id). BCA emails you a registration link; check spam.
 2. Create an application under "My Application" and select the API service you want to try (here: Account Information, Balance Inquiry). BCA's page says an application is confirmed after you answer questions about your product, and you then get a Client ID. How long that takes, and whether a personal account is accepted: (unverified).
 3. Copy the security key (Client ID and Client Secret) from "My Application" into `BCA_CLIENT_ID` and `BCA_CLIENT_SECRET`. BCA says to keep the secret private and to reset it if exposed.
-4. Make an RSA key pair on your computer. The backend signs the token request with the private key, and BCA's docs say the partner sends its public key in X.509 PEM format ("BEGIN PUBLIC KEY"):
+4. Make an RSA key pair on your computer for the token signature. BCA's docs say the partner sends BCA a public key, and show a sample that starts with "BEGIN PUBLIC KEY". These openssl commands only make a plain RSA key pair; they do not make a certificate. Whether BCA wants a bare public key or a certificate, the required key size, and where to submit it in the portal are all (unverified):
    ```bash
    cd backend
    openssl genrsa -out bca-sandbox-private.pem 2048
    openssl rsa -in bca-sandbox-private.pem -pubout -out bca-sandbox-public.pem
    ```
-   Keep the private key on your computer. `*.pem` is in `.gitignore`. Key size BCA requires and where to upload the public key in the portal: (unverified).
+   Keep the private key on your computer. `*.pem` is in `.gitignore`.
 5. Fill `backend/.env` from `env-template.txt`:
    - `BCA_CLIENT_ID`, `BCA_CLIENT_SECRET`: step 3.
    - `BCA_PRIVATE_KEY_PATH=./bca-sandbox-private.pem`: step 4.
@@ -45,9 +45,9 @@ Source pages: [How to Use](https://developer.bca.co.id/en/Cara-Penggunaan), [San
    - `TESTER_TOKEN`: `openssl rand -hex 32`. Paste the same value into the app.
 6. Run the backend and the app as described in "BCA sandbox test" above.
 
-### Known mismatches with BCA's current documentation
+### Likely mismatches with BCA's current documentation
 
-Found by comparing `backend/server.js` with BCA's SNAP documentation. Not yet fixed or tested, so a balance call may fail until they are:
+Found by comparing `backend/server.js` with BCA's SNAP documentation. Not fixed and not confirmed by a real call. They may or may not make a balance call fail:
 
 - `X-EXTERNAL-ID` is listed as a required header (numeric string, max 36 characters, unique within a day). The backend does not send it.
 - `X-TIMESTAMP` is documented as ISO 8601 with a timezone offset, 25 characters (for example `2022-04-21T17:34:52+07:00`). The backend sends UTC with `Z`.
