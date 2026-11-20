@@ -13,7 +13,7 @@ Node backend  --HTTPS-->  https://sandbox.bca.co.id
 
 ## Android app
 
-Source: `app/src/main/java/com/irvanputra/sapi/MainActivity.java`
+Source: `app/src/main/java/com/vanipy/sapi/MainActivity.java`
 
 - One screen: a token field, a "Check backend" button and a "Test BCA balance" button.
 - It sends `GET /health` or `GET /balance` to `http://127.0.0.1:8787` with `Authorization: Bearer <tester token>`. The token must be 64 hex characters.
