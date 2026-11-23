@@ -20,6 +20,10 @@ Build the Android APK as below. Paste only TESTER_TOKEN into the app. BCA succes
 
 For a walkthrough of what the code does and what is untested, see [docs/HOW-IT-WORKS.md](docs/HOW-IT-WORKS.md).
 
+## Path to production
+
+[docs/BCA-PRODUCTION-MAP.md](docs/BCA-PRODUCTION-MAP.md) holds the five-step BCA production cooperation map (from Rapi), and [docs/BCA-PRODUCTION-MAP-CHECKS.md](docs/BCA-PRODUCTION-MAP-CHECKS.md) checks each step against BCA's official pages and the national SNAP standard, including what is blocked on the cooperation application and what can proceed now.
+
 ## Getting BCA sandbox credentials, step by step
 
 Sandbox only. Do not use real banking credentials, and never commit or share secrets. Steps marked (unverified) are things I could not confirm from BCA's public pages, so check them on the portal.
