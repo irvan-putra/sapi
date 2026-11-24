@@ -82,3 +82,7 @@ Pushing to GitHub also runs the included GitHub Actions workflow and publishes `
 ## Credits
 
 Developed with help from Rapi (biks.ai).
+
+---
+
+Built with AI assistance (Instinct and others). Not everything has been reviewed by Irvan.
