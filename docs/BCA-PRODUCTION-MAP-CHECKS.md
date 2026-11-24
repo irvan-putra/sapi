@@ -1,6 +1,6 @@
 # Checking Rapi's BCA production map against official sources
 
-Each step of [BCA-PRODUCTION-MAP.md](BCA-PRODUCTION-MAP.md) checked against BCA's official pages and the national SNAP standard, all read 23 November 2026. Items marked (unverified) could not be confirmed from public pages and should be confirmed with BCA (api_support@bca.co.id or the PIC after applying).
+Each step of [BCA-PRODUCTION-MAP.md](BCA-PRODUCTION-MAP.md) was checked by Instinct (an AI assistant) against BCA's official pages and the national SNAP standard, all read 23 November 2026. Items marked (unverified) could not be confirmed from public pages and should be confirmed with BCA (api_support@bca.co.id or the PIC after applying).
 
 Sources used:
 
