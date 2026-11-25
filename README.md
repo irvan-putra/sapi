@@ -79,10 +79,4 @@ app/build/outputs/apk/debug/app-debug.apk
 
 Pushing to GitHub also runs the included GitHub Actions workflow and publishes `sapi-debug-apk` as a workflow artifact.
 
-## Credits
-
-Developed with help from Rapi (biks.ai).
-
----
-
-Built with AI assistance (Instinct and others). Not everything has been reviewed by Irvan.
+Built with AI assistance (Instinct, biks.ai and others). Not everything has been reviewed by Irvan.
